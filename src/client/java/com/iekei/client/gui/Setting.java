@@ -2,16 +2,18 @@ package com.iekei.client.gui;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 /**
  * A single configurable value of a module. The in-game ClickGUI renders these
- * as toggles, sliders and cycling dropdowns.
+ * as toggles, sliders, cycling dropdowns and keybind pickers.
  */
 public final class Setting {
 	public enum Type {
 		TOGGLE,
 		SLIDER,
-		CHOICE
+		CHOICE,
+		KEYBIND
 	}
 
 	private final String label;
@@ -25,6 +27,8 @@ public final class Setting {
 	private boolean boolValue;
 	private double numberValue;
 	private int choiceIndex;
+	private int keyValue;
+	private BooleanSupplier visible = () -> true;
 
 	private Setting(String label, Type type, List<String> options, double min, double max, double step, String unit) {
 		this.label = label;
@@ -52,6 +56,23 @@ public final class Setting {
 		Setting s = new Setting(label, Type.CHOICE, Arrays.asList(options), 0, 0, 0, "");
 		s.choiceIndex = 0;
 		return s;
+	}
+
+	/** SDL scancode based module keybind. 0 = unbound. */
+	public static Setting keybind(String label, int scancode) {
+		Setting s = new Setting(label, Type.KEYBIND, List.of(), 0, 0, 0, "");
+		s.keyValue = scancode;
+		return s;
+	}
+
+	/** Hides this setting in the GUI while the condition is false. */
+	public Setting onlyIf(BooleanSupplier condition) {
+		this.visible = condition;
+		return this;
+	}
+
+	public boolean visible() {
+		return visible.getAsBoolean();
 	}
 
 	public String label() {
@@ -130,11 +151,24 @@ public final class Setting {
 		return options.isEmpty() ? "-" : options.get(choiceIndex);
 	}
 
+	public boolean choiceIs(String name) {
+		return choiceLabel().equalsIgnoreCase(name);
+	}
+
+	public int getKey() {
+		return keyValue;
+	}
+
+	public void setKey(int scancode) {
+		keyValue = scancode;
+	}
+
 	/** Formatted value shown on the right of a setting row. */
 	public String displayValue() {
 		return switch (type) {
 			case TOGGLE -> boolValue ? "ON" : "OFF";
 			case CHOICE -> choiceLabel();
+			case KEYBIND -> KeyNames.of(keyValue);
 			case SLIDER -> {
 				double v = numberValue;
 				String number = step >= 1 ? String.valueOf(Math.round(v)) : String.format("%.1f", v);

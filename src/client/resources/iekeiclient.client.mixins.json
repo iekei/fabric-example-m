@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.iekei.client.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"BlockBehaviourMixin",
+		"ClientPacketListenerMixin",
+		"EntityMixin",
+		"LivingEntityMixin",
+		"PlayerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

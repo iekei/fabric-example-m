@@ -52,6 +52,7 @@ public class ClickGuiScreen extends Screen {
 	private int contentHeight;
 	private boolean themeOpen;
 	private Setting dragging;
+	private Setting keybindTarget;
 	private int dragTrackX;
 	private int dragTrackW;
 	private String toast = "";
@@ -435,6 +436,10 @@ public class ClickGuiScreen extends Screen {
 			int sy = y + CARD_HEADER_H + 3;
 
 			for (Setting setting : m.settings()) {
+				if (!setting.visible()) {
+					continue;
+				}
+
 				drawSetting(g, m, setting, x + 5, sy, w - 10, mouseX, mouseY);
 				sy += SETTING_ROW_H;
 			}
@@ -463,6 +468,16 @@ public class ClickGuiScreen extends Screen {
 				Draw.roundRect(g, bx, y + 2, bw, 13, 3, hover ? Theme.alpha(120) : STROKE);
 				Draw.textTruncated(g, s.choiceLabel(), bx + 4, y + 5, bw - 12, TEXT);
 				Draw.icon(g, Icon.CHEVRON, bx + bw - 9, y + 6, 8, DIM);
+				addHit(new SettingHit(s, bx, y, bw, 16, 0, 0));
+			}
+			case KEYBIND -> {
+				Draw.text(g, s.label(), x, y + 4, MUTED);
+				boolean listening = keybindTarget == s;
+				int bw = 56;
+				int bx = x + w - bw;
+				Draw.roundRect(g, bx, y + 2, bw, 13, 3, listening ? Theme.alpha(50) : 0x1AFFFFFF);
+				Draw.textCenter(g, listening ? "press..." : s.displayValue(), bx + bw / 2, y + 5,
+						listening ? Theme.accent() : TEXT);
 				addHit(new SettingHit(s, bx, y, bw, 16, 0, 0));
 			}
 			case SLIDER -> {
@@ -562,8 +577,15 @@ public class ClickGuiScreen extends Screen {
 	}
 
 	private int cardHeight(Module m) {
-		int settings = m.settings().size();
-		return CARD_HEADER_H + Math.round(settings * SETTING_ROW_H * m.expandProgress()) + 4;
+		int visibleSettings = 0;
+
+		for (Setting s : m.settings()) {
+			if (s.visible()) {
+				visibleSettings++;
+			}
+		}
+
+		return CARD_HEADER_H + Math.round(visibleSettings * SETTING_ROW_H * m.expandProgress()) + 4;
 	}
 
 	/* ================================================================
@@ -583,6 +605,7 @@ public class ClickGuiScreen extends Screen {
 		if (!panelRect.contains(mx, my)) {
 			searchFocused = false;
 			themeOpen = false;
+			keybindTarget = null;
 			return super.mouseClicked(event, doubleClick);
 		}
 
@@ -614,6 +637,7 @@ public class ClickGuiScreen extends Screen {
 		searchFocused = searchRect.contains(mx, my);
 
 		if (searchFocused) {
+			keybindTarget = null;
 			return true;
 		}
 
@@ -632,6 +656,7 @@ public class ClickGuiScreen extends Screen {
 				Registry.setActive(i);
 				scroll = 0;
 				search = "";
+				keybindTarget = null;
 				return true;
 			}
 		}
@@ -680,6 +705,10 @@ public class ClickGuiScreen extends Screen {
 					}
 					case CHOICE -> {
 						sh.setting.cycleChoice();
+						return true;
+					}
+					case KEYBIND -> {
+						keybindTarget = sh.setting;
 						return true;
 					}
 					case SLIDER -> {
@@ -738,6 +767,14 @@ public class ClickGuiScreen extends Screen {
 
 	@Override
 	public boolean keyPressed(KeyEvent event) {
+		// keybind capture takes priority over everything else
+		if (keybindTarget != null) {
+			keybindTarget.setKey(event.scancode() == SDLScancode.SDL_SCANCODE_ESCAPE ? 0 : event.scancode());
+			keybindTarget = null;
+			notifyToast("Keybind updated");
+			return true;
+		}
+
 		// [Right Shift] closes the GUI (opening is handled by the keybind)
 		if (event.scancode() == SDLScancode.SDL_SCANCODE_RSHIFT) {
 			IekeiClientClient.suppressOpenFor(300L);

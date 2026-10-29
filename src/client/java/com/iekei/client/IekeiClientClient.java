@@ -1,9 +1,12 @@
 package com.iekei.client;
 
 import com.iekei.IekeiClient;
+import com.iekei.client.core.Config;
+import com.iekei.client.core.ModuleManager;
 import com.iekei.client.gui.ClickGuiScreen;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
@@ -42,11 +45,15 @@ public final class IekeiClientClient implements ClientModInitializer {
 				CATEGORY));
 
 		ClientTickEvents.END_CLIENT_TICK.register(IekeiClientClient::onEndTick);
+		ClientLifecycleEvents.CLIENT_STOPPING.register(client -> Config.save());
 
 		IekeiClient.LOGGER.info("[Iekei Client] ClickGUI bound to [Right Shift]");
 	}
 
 	private static void onEndTick(Minecraft client) {
+		ModuleManager.tick(client);
+		Config.tickAutosave();
+
 		if (openGuiKey == null) {
 			return;
 		}
