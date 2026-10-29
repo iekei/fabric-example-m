@@ -10,7 +10,9 @@
 		"ClientPacketListenerMixin",
 		"EntityMixin",
 		"ItemInHandRendererMixin",
+		"ItemRendererMixin",
 		"LivingEntityMixin",
+		"MultiPlayerGameModeMixin",
 		"PlayerMixin",
 		"ScreenEffectRendererMixin"
 	],

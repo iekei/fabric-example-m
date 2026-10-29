@@ -82,6 +82,36 @@ import java.util.List;
 import com.iekei.client.modules.settings.KeybindConfig;
 import com.iekei.client.modules.settings.SoundEffects;
 import com.iekei.client.modules.settings.ThemeSelector;
+import com.iekei.client.modules.chunkutil.BaseRadar;
+import com.iekei.client.modules.chunkutil.ChestRadar;
+import com.iekei.client.modules.chunkutil.ChunkBorder;
+import com.iekei.client.modules.chunkutil.StorageTracer;
+import com.iekei.client.modules.chunkutil.TrailTracker;
+import com.iekei.client.modules.chunkutil.VaultFinder;
+import com.iekei.client.modules.pvp.AnchorAura;
+import com.iekei.client.modules.pvp.AutoArmorSwap;
+import com.iekei.client.modules.pvp.AutoCobweb;
+import com.iekei.client.modules.pvp.AutoTotemRefill;
+import com.iekei.client.modules.pvp.CriticalsPlus;
+import com.iekei.client.modules.pvp.HitBoxPlus;
+import com.iekei.client.modules.pvp.PearlPredictor;
+import com.iekei.client.modules.pvp.ShieldBreaker;
+import com.iekei.client.modules.exploit.AutoLogOnDanger;
+import com.iekei.client.modules.exploit.FakeLagSwitch;
+import com.iekei.client.modules.exploit.InventoryDesyncGuard;
+import com.iekei.client.modules.exploit.PacketCanceller;
+import com.iekei.client.modules.exploit.PayloadBypass;
+import com.iekei.client.modules.exploit.PingDisguiser;
+import com.iekei.client.modules.hud.ArmorHUD;
+import com.iekei.client.modules.hud.CoordsHUD;
+import com.iekei.client.modules.hud.FpsTps;
+import com.iekei.client.modules.hud.Keystrokes;
+import com.iekei.client.modules.hud.PotionStatus;
+import com.iekei.client.modules.hud.TargetHUD;
+import com.iekei.client.modules.nav.BaseRadarPointer;
+import com.iekei.client.modules.nav.ChunkTrailTracer;
+import com.iekei.client.modules.nav.ReturnNavigator;
+import com.iekei.client.modules.nav.StashDirectionalHUD;
 
 /**
  * The full Iekei Client module list: 8 categories, 78 modules.
@@ -115,9 +145,9 @@ public final class Registry {
 		movement.add(new Parkour());
 		CATEGORIES.add(movement);
 
-		/* ------------------------------------------------ Combat */
+/* ------------------------------------------------ Combat */
 		Category combat = new Category("combat", "Combat", "戦闘系",
-				"Combat assistance with humanised timing and rotation.", Icon.SWORDS);
+				"Melee, ranged, crystal and anchor combat assistance.", Icon.SWORDS);
 		combat.add(new Killaura());
 		combat.add(new Triggerbot());
 		combat.add(new AimAssist());
@@ -130,6 +160,16 @@ public final class Registry {
 		combat.add(new TargetStrafe());
 		combat.add(new HitBox());
 		combat.add(new FastUse());
+
+		/* advanced PvP / crystal play */
+		combat.add(new AnchorAura());
+		combat.add(new AutoArmorSwap());
+		combat.add(new AutoTotemRefill());
+		combat.add(new CriticalsPlus());
+		combat.add(new HitBoxPlus());
+		combat.add(new AutoCobweb());
+		combat.add(new ShieldBreaker());
+		combat.add(new PearlPredictor());
 		CATEGORIES.add(combat);
 
 		/* ------------------------------------------------ Utility */
@@ -180,9 +220,9 @@ public final class Registry {
 		cosmetic.add(new CustomCrosshair());
 		CATEGORIES.add(cosmetic);
 
-		/* ------------------------------------------------ Base find */
+/* ------------------------------------------------ Base find */
 		Category basefind = new Category("basefind", "Base Find", "拠点捜索系",
-				"Anubis-style structure and stash scanning for anarchy servers.", Icon.HOME);
+				"Anubis-style structure, stash and chunk scanning for anarchy servers.", Icon.HOME);
 		basefind.add(new BaseFinder());
 		basefind.add(new ChestFinder());
 		basefind.add(new PortalFinder());
@@ -193,7 +233,46 @@ public final class Registry {
 		basefind.add(new NewChunks());
 		basefind.add(new TrailFinder());
 		basefind.add(new WorldGuardFinder());
+
+		/* chunk utility */
+		basefind.add(new ChestRadar());
+		basefind.add(new BaseRadar());
+		basefind.add(new TrailTracker());
+		basefind.add(new VaultFinder());
+		basefind.add(new ChunkBorder());
+		basefind.add(new StorageTracer());
 		CATEGORIES.add(basefind);
+
+		/* ------------------------------------------------ Exploit */
+		Category exploit = new Category("exploit", "Exploit", "エクスプロイト",
+				"Packet shaping and server interaction tricks.", Icon.WRENCH);
+		exploit.add(new InventoryDesyncGuard());
+		exploit.add(new PacketCanceller());
+		exploit.add(new FakeLagSwitch());
+		exploit.add(new AutoLogOnDanger());
+		exploit.add(new PingDisguiser());
+		exploit.add(new PayloadBypass());
+		CATEGORIES.add(exploit);
+
+		/* ------------------------------------------------ Custom HUD */
+		Category hud = new Category("hud", "Custom HUD", "カスタムHUD",
+				"On-screen information widgets.", Icon.EYE);
+		hud.add(new ArmorHUD());
+		hud.add(new PotionStatus());
+		hud.add(new CoordsHUD());
+		hud.add(new Keystrokes());
+		hud.add(new FpsTps());
+		hud.add(new TargetHUD());
+		CATEGORIES.add(hud);
+
+		/* ------------------------------------------------ Navigation */
+		Category nav = new Category("nav", "Basehunting Nav", "拠点誘導",
+				"Directional pointers for base hunting and returning home.", Icon.FOOTPRINTS);
+		nav.add(new BaseRadarPointer());
+		nav.add(new ReturnNavigator());
+		nav.add(new ChunkTrailTracer());
+		nav.add(new StashDirectionalHUD());
+		CATEGORIES.add(nav);
 
 		/* ------------------------------------------------ Notification */
 		Category notify = new Category("notify", "Notification", "通知・警報系",

@@ -47,6 +47,30 @@ public final class ChatCommands {
 			}
 			case "list" -> list();
 			default -> help();
+            
+            case "home" -> {
+				if (parts.length >= 3 && parts[2].equalsIgnoreCase("set") && mc.player != null) {
+					com.iekei.client.modules.nav.ReturnNavigator.setHome(mc.player.blockPosition());
+				} else {
+					Notify.chat("Usage: .iekai home set");
+				}
+			}
+			case "danger" -> {
+				if (parts.length < 3) {
+					Notify.chat("Listed: " + String.join(", ", DangerList.names()));
+					return false;
+				}
+
+				if (parts[2].equalsIgnoreCase("clear")) {
+					DangerList.names().clear();
+					DangerList.save();
+				} else {
+					DangerList.add(parts[2]);
+				}
+
+				Notify.chat("Danger list updated");
+			}
+            
 		}
 
 		return false;
