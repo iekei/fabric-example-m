@@ -6,10 +6,13 @@
 	"client": [
 		"BlockBehaviourMixin",
 		"CameraMixin",
+		"ClientLevelMixin",
 		"ClientPacketListenerMixin",
 		"EntityMixin",
+		"ItemInHandRendererMixin",
 		"LivingEntityMixin",
-		"PlayerMixin"
+		"PlayerMixin",
+		"ScreenEffectRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

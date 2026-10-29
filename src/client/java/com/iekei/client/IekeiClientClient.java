@@ -17,6 +17,9 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import org.lwjgl.sdl.SDLScancode;
+import com.iekei.client.core.ChatCommands;
+import com.iekei.client.core.Webhook;
+import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 
 /**
  * Client entrypoint.
@@ -57,6 +60,9 @@ public final class IekeiClientClient implements ClientModInitializer {
 				(extractor, deltaTracker) -> Hud.render(extractor));
 
 		WorldRenderEvents.AFTER_ENTITIES.register(RenderDispatcher::onWorldRender);
+		
+		ClientSendMessageEvents.ALLOW_CHAT.register(ChatCommands::onChat);
+		Webhook.load();
 
 		IekeiClient.LOGGER.info("[Iekei Client] ClickGUI bound to [Right Shift]");
 	}

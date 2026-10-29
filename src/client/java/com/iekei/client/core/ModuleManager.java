@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
+import com.iekei.client.modules.settings.SoundEffects;
+import net.minecraft.sounds.SoundEvents;
 
 /** Owns the live module list: tick dispatch, keybinds and config wiring. */
 public final class ModuleManager {
@@ -65,14 +67,26 @@ public final class ModuleManager {
 		return m != null && m.enabled();
 	}
 
-	public static void onModuleEnabled(Module m) {
+public static void onModuleEnabled(Module m) {
 		Notify.toast(m.name() + " ON", true);
+		click();
 	}
 
 	public static void onModuleDisabled(Module m) {
 		Notify.toast(m.name() + " OFF", false);
+		click();
 	}
 
+	private static void click() {
+		SoundEffects sound = get(SoundEffects.class);
+		var player = Minecraft.getInstance().player;
+
+		if (sound == null || !sound.audible() || player == null) {
+			return;
+		}
+
+		player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), sound.gain(), 1.4F);
+	}
 	/* ---------------- tick ---------------- */
 
 	public static void tick(Minecraft mc) {

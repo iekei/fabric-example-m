@@ -79,6 +79,9 @@ import com.iekei.client.modules.utility.Scaffold;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.iekei.client.modules.settings.KeybindConfig;
+import com.iekei.client.modules.settings.SoundEffects;
+import com.iekei.client.modules.settings.ThemeSelector;
 
 /**
  * The full Iekei Client module list: 8 categories, 78 modules.
@@ -206,12 +209,9 @@ public final class Registry {
 		/* ------------------------------------------------ Settings */
 		Category settings = new Category("settings", "Client Settings", "設定",
 				"Keybinds, accent theme and client-wide preferences.", Icon.GEAR);
-		settings.add(mod("keybind", "Keybind Config", "The key that opens and closes this menu.", true,
-				Setting.choice("Menu Toggle Key", "Right Shift", "Right Ctrl", "Grave")));
-		settings.add(mod("theme", "Theme Selector", "Accent colour used across the whole client.", true,
-				Setting.slider("Glow Intensity", 70, 0, 100, 5, "%")));
-		settings.add(mod("sound", "Sound Effects", "Subtle UI clicks and toggle blips.", true,
-				Setting.toggle("Enabled", true)));
+		settings.add(new KeybindConfig());
+		settings.add(new ThemeSelector());
+		settings.add(new SoundEffects());
 		CATEGORIES.add(settings);
 	}
 

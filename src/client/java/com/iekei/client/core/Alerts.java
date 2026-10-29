@@ -35,7 +35,7 @@ public final class Alerts {
 		}
 	}
 
-	public static boolean active(String id) {
+	private static boolean active(String id) {
 		var module = ModuleManager.byId(id);
 		return module != null && module.enabled();
 	}

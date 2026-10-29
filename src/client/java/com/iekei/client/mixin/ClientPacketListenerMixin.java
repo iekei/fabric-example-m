@@ -1,10 +1,15 @@
 package com.iekei.client.mixin;
 
 import com.iekei.client.core.ModuleManager;
+import com.iekei.client.modules.basefind.NewChunks;
+import com.iekei.client.modules.basefind.TrailFinder;
+import com.iekei.client.modules.basefind.WorldGuardFinder;
 import com.iekei.client.modules.combat.Velocity;
 import com.iekei.client.modules.movement.Blink;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,6 +47,38 @@ public abstract class ClientPacketListenerMixin {
 
 		if (blink != null && blink.shouldHold(packet)) {
 			ci.cancel();
+		}
+	}
+
+	@Inject(method = "handleLevelChunkWithLight", at = @At("TAIL"))
+	private void iekei$newChunk(ClientboundLevelChunkWithLightPacket packet, CallbackInfo ci) {
+		NewChunks module = ModuleManager.get(NewChunks.class);
+
+		if (module != null && module.enabled()) {
+			NewChunks.onChunk(((long) packet.getX() << 32) | (packet.getZ() & 0xFFFFFFFFL));
+		}
+	}
+
+	@Inject(method = "handleBlockUpdate", at = @At("TAIL"))
+	private void iekei$blockUpdate(ClientboundBlockUpdatePacket packet, CallbackInfo ci) {
+		ClientPacketListener self = (ClientPacketListener) (Object) this;
+		boolean air = packet.getBlockState().isAir();
+		var pos = packet.getPos();
+
+		TrailFinder trail = ModuleManager.get(TrailFinder.class);
+
+		if (trail != null && trail.enabled()) {
+			trail.onBlockUpdate(pos, air);
+		}
+
+		WorldGuardFinder guard = ModuleManager.get(WorldGuardFinder.class);
+
+		if (guard != null && guard.enabled() && !air) {
+			var local = self.getLevel().getBlockState(pos);
+
+			if (!local.isAir()) {
+				guard.onBlockReverted(pos);
+			}
 		}
 	}
 }

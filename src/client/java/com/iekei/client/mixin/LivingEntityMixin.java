@@ -2,6 +2,7 @@ package com.iekei.client.mixin;
 
 import com.iekei.client.core.ModuleManager;
 import com.iekei.client.modules.combat.FastUse;
+import com.iekei.client.modules.cosmetic.CustomAnimations;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,6 +17,15 @@ public abstract class LivingEntityMixin {
 
 		if (fastUse != null && fastUse.enabled()) {
 			cir.setReturnValue((int) (cir.getReturnValue() / fastUse.speed()));
+		}
+	}
+
+	@Inject(method = "getCurrentSwingDuration", at = @At("RETURN"), cancellable = true)
+	private void iekei$swingDuration(CallbackInfoReturnable<Integer> cir) {
+		CustomAnimations module = ModuleManager.get(CustomAnimations.class);
+
+		if (module != null && module.enabled()) {
+			cir.setReturnValue(module.swingDuration());
 		}
 	}
 }
