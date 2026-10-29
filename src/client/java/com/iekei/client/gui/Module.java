@@ -5,6 +5,8 @@ import com.iekei.client.core.ModuleManager;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 /** A toggleable client module. Subclasses implement the actual behaviour. */
 public abstract class Module {
@@ -39,6 +41,14 @@ public abstract class Module {
 
 	/** Runs on every client tick, but only while enabled. */
 	public void onTick() {
+	}
+
+	/** Runs during the world render pass, after entities. */
+	public void onRenderWorld(WorldRenderContext context) {
+	}
+
+	/** Runs on the HUD layer every frame. */
+	public void onRenderHud(GuiGraphicsExtractor g, float delta) {
 	}
 
 	public String hudInfo() {

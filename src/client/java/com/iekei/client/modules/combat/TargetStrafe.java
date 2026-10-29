@@ -9,8 +9,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
 public final class TargetStrafe extends Module {
-	private final Setting radius = Setting.slider("Radius", 3.0, 1.0, 6.0, 0.1, "b");
-	private final Setting direction = Setting.choice("Direction", "Clockwise", "Counter", "Random");
+	private static final Setting radius = Setting.slider("Radius", 3.0, 1.0, 6.0, 0.1, "b");
+	private static final Setting direction = Setting.choice("Direction", "Clockwise", "Counter", "Random");
 	private final Random random = new Random();
 	private int sign = 1;
 

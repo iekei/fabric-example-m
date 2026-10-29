@@ -7,9 +7,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.phys.Vec3;
 
 public final class Speed extends Module {
-	private final Setting multiplier = Setting.slider("Multiplier", 2.4, 1.0, 10.0, 0.1, "x");
-	private final Setting mode = Setting.choice("Mode", "Strafe", "Omni", "Legacy");
-	private final Setting autoJump = Setting.toggle("Auto Jump", true);
+	private static final Setting multiplier = Setting.slider("Multiplier", 2.4, 1.0, 10.0, 0.1, "x");
+	private static final Setting mode = Setting.choice("Mode", "Strafe", "Omni", "Legacy");
+	private static final Setting autoJump = Setting.toggle("Auto Jump", true);
 
 	public Speed() {
 		super("speed", "Speed", "Multiplies your ground movement speed.", true, multiplier, mode, autoJump);

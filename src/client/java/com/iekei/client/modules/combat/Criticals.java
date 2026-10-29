@@ -6,7 +6,7 @@ import com.iekei.client.gui.Setting;
 import net.minecraft.client.player.LocalPlayer;
 
 public final class Criticals extends Module {
-	private final Setting mode = Setting.choice("Mode", "Packet", "Jump", "MiniJump");
+	private static final Setting mode = Setting.choice("Mode", "Packet", "Jump", "MiniJump");
 
 	public Criticals() {
 		super("criticals", "Criticals", "Forces every hit to be a critical hit.", false, mode);

@@ -7,7 +7,7 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 
 public final class FastBow extends Module {
-	private final Setting instant = Setting.toggle("Instant Release", true);
+	private static final Setting instant = Setting.toggle("Instant Release", true);
 
 	public FastBow() {
 		super("fastbow", "FastBow", "Shoots arrows with almost no cooldown.", false, instant);

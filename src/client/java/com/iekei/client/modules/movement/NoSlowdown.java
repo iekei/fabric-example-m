@@ -6,8 +6,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.phys.Vec3;
 
 public final class NoSlowdown extends Module {
-	private final Setting itemsOnly = Setting.toggle("Items Only", false);
-	private final Setting ignoreWebs = Setting.toggle("Ignore Webs", true);
+	private static final Setting itemsOnly = Setting.toggle("Items Only", false);
+	private static final Setting ignoreWebs = Setting.toggle("Ignore Webs", true);
 
 	public NoSlowdown() {
 		super("noslowdown", "NoSlowdown", "Removes the slowdown from using items.", true, itemsOnly, ignoreWebs);

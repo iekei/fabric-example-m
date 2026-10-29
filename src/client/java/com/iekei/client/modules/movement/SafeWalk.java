@@ -7,8 +7,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 
 public final class SafeWalk extends Module {
-	private final Setting forceSneak = Setting.toggle("Force Sneak", true);
-	private final Setting includeAir = Setting.toggle("Include Air Blocks", false);
+	private static final Setting forceSneak = Setting.toggle("Force Sneak", true);
+	private static final Setting includeAir = Setting.toggle("Include Air Blocks", false);
 
 	public SafeWalk() {
 		super("safewalk", "SafeWalk", "Stops you from walking off edges.", true, forceSneak, includeAir);

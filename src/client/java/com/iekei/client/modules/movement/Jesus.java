@@ -7,8 +7,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 
 public final class Jesus extends Module {
-	private final Setting liquid = Setting.choice("Liquid", "Water", "Lava", "Both");
-	private final Setting sneakToSink = Setting.toggle("Sneak to Sink", true);
+	private static final Setting liquid = Setting.choice("Liquid", "Water", "Lava", "Both");
+	private static final Setting sneakToSink = Setting.toggle("Sneak to Sink", true);
 
 	public Jesus() {
 		super("jesus", "Jesus", "Walk on water, lava and other liquids.", false, liquid, sneakToSink);

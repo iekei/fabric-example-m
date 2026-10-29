@@ -8,9 +8,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 public final class AimAssist extends Module {
-	private final Setting smoothness = Setting.slider("Smoothness", 4.5, 1.0, 10.0, 0.1, "");
-	private final Setting fov = Setting.slider("FOV", 90, 30, 180, 5, "°");
-	private final Setting vertical = Setting.toggle("Vertical Assist", false);
+	private static final Setting smoothness = Setting.slider("Smoothness", 4.5, 1.0, 10.0, 0.1, "");
+	private static final Setting fov = Setting.slider("FOV", 90, 30, 180, 5, "°");
+	private static final Setting vertical = Setting.toggle("Vertical Assist", false);
 
 	public AimAssist() {
 		super("aimassist", "AimAssist", "Gently nudges your aim towards targets.", true,

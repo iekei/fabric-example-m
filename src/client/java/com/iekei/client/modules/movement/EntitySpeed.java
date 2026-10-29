@@ -6,7 +6,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 
 public final class EntitySpeed extends Module {
-	private final Setting speed = Setting.slider("Speed", 2.5, 1.0, 8.0, 0.1, "x");
+	private static final Setting speed = Setting.slider("Speed", 2.5, 1.0, 8.0, 0.1, "x");
 
 	public EntitySpeed() {
 		super("entityspeed", "EntitySpeed", "Speeds up boats, horses and minecarts.", false, speed);

@@ -4,7 +4,7 @@ import com.iekei.client.gui.Module;
 import com.iekei.client.gui.Setting;
 
 public final class FastUse extends Module {
-	private final Setting speed = Setting.slider("Speed", 2.5, 1.0, 5.0, 0.1, "x");
+	private static final Setting speed = Setting.slider("Speed", 2.5, 1.0, 5.0, 0.1, "x");
 
 	public FastUse() {
 		super("fastuse", "FastUse", "Uses items such as food far faster.", false, speed);

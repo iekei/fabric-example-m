@@ -6,9 +6,9 @@ import com.iekei.client.gui.Setting;
 import java.util.Random;
 
 public final class AutoClicker extends Module {
-	private final Setting cps = Setting.slider("CPS", 12, 1, 20, 0.5, "/s");
-	private final Setting button = Setting.choice("Button", "Left", "Right", "Both");
-	private final Setting jitter = Setting.toggle("Jitter", true);
+	private static final Setting cps = Setting.slider("CPS", 12, 1, 20, 0.5, "/s");
+	private static final Setting button = Setting.choice("Button", "Left", "Right", "Both");
+	private static final Setting jitter = Setting.toggle("Jitter", true);
 	private final Timer cooldown = new Timer();
 	private final Random random = new Random();
 

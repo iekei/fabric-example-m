@@ -4,8 +4,8 @@ import com.iekei.client.gui.Module;
 import com.iekei.client.gui.Setting;
 
 public final class Step extends Module {
-	private final Setting height = Setting.slider("Height", 1.0, 0.5, 2.5, 0.1, "b");
-	private final Setting instant = Setting.toggle("Instant", true);
+	private static final Setting height = Setting.slider("Height", 1.0, 0.5, 2.5, 0.1, "b");
+	private static final Setting instant = Setting.toggle("Instant", true);
 
 	public Step() {
 		super("step", "Step", "Instantly climbs up blocks.", true, height, instant);

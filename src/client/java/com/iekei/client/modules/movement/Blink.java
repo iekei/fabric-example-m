@@ -9,8 +9,8 @@ import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 
 public final class Blink extends Module {
-	private final Setting hold = Setting.slider("Hold Duration", 800, 100, 3000, 50, "ms");
-	private final Setting autoSend = Setting.toggle("Auto Send", true);
+	private static final Setting hold = Setting.slider("Hold Duration", 800, 100, 3000, 50, "ms");
+	private static final Setting autoSend = Setting.toggle("Auto Send", true);
 	private final List<Packet<?>> queue = new ArrayList<>();
 	private long startedAt;
 

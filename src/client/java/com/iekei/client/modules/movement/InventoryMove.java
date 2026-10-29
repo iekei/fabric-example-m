@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
 public final class InventoryMove extends Module {
-	private final Setting allowInGuis = Setting.toggle("Allow in GUIs", true);
+	private static final Setting allowInGuis = Setting.toggle("Allow in GUIs", true);
 
 	public InventoryMove() {
 		super("inventorymove", "InventoryMove", "Move while an inventory screen is open.", false, allowInGuis);

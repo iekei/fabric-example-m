@@ -10,7 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.EntityHitResult;
 
 public final class Triggerbot extends Module {
-	private final Setting delay = Setting.slider("Delay", 60, 0, 500, 10, "ms");
+	private static final Setting delay = Setting.slider("Delay", 60, 0, 500, 10, "ms");
 	private final Timer cooldown = new Timer();
 
 	public Triggerbot() {

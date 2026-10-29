@@ -14,10 +14,10 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 
 public final class Killaura extends Module {
-	private final Setting range = Setting.slider("Range", 4.2, 2.5, 7.0, 0.1, "b");
-	private final Setting aps = Setting.slider("APS", 9.5, 1.0, 20.0, 0.5, "/s");
-	private final Setting priority = Setting.choice("Priority", "Closest", "Lowest HP", "Angle");
-	private final Setting targetPlayers = Setting.toggle("Target Players", true);
+	private static final Setting range = Setting.slider("Range", 4.2, 2.5, 7.0, 0.1, "b");
+	private static final Setting aps = Setting.slider("APS", 9.5, 1.0, 20.0, 0.5, "/s");
+	private static final Setting priority = Setting.choice("Priority", "Closest", "Lowest HP", "Angle");
+	private static final Setting targetPlayers = Setting.toggle("Target Players", true);
 	private final Timer cooldown = new Timer();
 
 	private Entity target;

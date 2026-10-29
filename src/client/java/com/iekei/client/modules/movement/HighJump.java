@@ -5,8 +5,8 @@ import com.iekei.client.gui.Setting;
 import net.minecraft.client.player.LocalPlayer;
 
 public final class HighJump extends Module {
-	private final Setting multiplier = Setting.slider("Multiplier", 2.0, 1.0, 8.0, 0.1, "x");
-	private final Setting glide = Setting.toggle("Glide Down", false);
+	private static final Setting multiplier = Setting.slider("Multiplier", 2.0, 1.0, 8.0, 0.1, "x");
+	private static final Setting glide = Setting.toggle("Glide Down", false);
 
 	public HighJump() {
 		super("highjump", "HighJump", "Jump several blocks into the air.", false, multiplier, glide);

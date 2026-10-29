@@ -6,8 +6,8 @@ import com.iekei.client.gui.Setting;
 import net.minecraft.client.player.LocalPlayer;
 
 public final class AirJump extends Module {
-	private final Setting height = Setting.slider("Jump Height", 0.9, 0.5, 2.0, 0.1, "b");
-	private final Setting maxJumps = Setting.slider("Max Jumps", 3, 1, 10, 1, "x");
+	private static final Setting height = Setting.slider("Jump Height", 0.9, 0.5, 2.0, 0.1, "b");
+	private static final Setting maxJumps = Setting.slider("Max Jumps", 3, 1, 10, 1, "x");
 	private final Timer cooldown = new Timer();
 	private int jumps;
 

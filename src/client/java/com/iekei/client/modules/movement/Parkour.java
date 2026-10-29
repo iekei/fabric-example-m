@@ -7,8 +7,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 
 public final class Parkour extends Module {
-	private final Setting autoJump = Setting.toggle("Auto Jump", true);
-	private final Setting requireSprint = Setting.toggle("Require Sprint", false);
+	private static final Setting autoJump = Setting.toggle("Auto Jump", true);
+	private static final Setting requireSprint = Setting.toggle("Require Sprint", false);
 
 	public Parkour() {
 		super("parkour", "Parkour", "Automatically jumps at ledge edges.", false, autoJump, requireSprint);
